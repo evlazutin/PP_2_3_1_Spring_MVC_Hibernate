@@ -1,6 +1,5 @@
 package web.model;
 
-import org.springframework.stereotype.Component;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,16 +14,16 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-
-
     private String name;
-
     @Column(name = "last_name")
     private String lastName;
 
-    public User(String name, String lastName) {
+    private String email;
+
+    public User(String name, String lastName, String email) {
         this.name = name;
         this.lastName = lastName;
+        this.email = email;
     }
 
     public User() {
@@ -54,4 +53,11 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

@@ -1,25 +1,65 @@
 package web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import web.model.User;
 import web.service.UserService;
 
+import javax.validation.Valid;
 
-    @Controller
-//    @RequestMapping("/users")
-    public class UserController {
 
-        private final UserService userService;
+@Controller
+@RequestMapping("/")
+public class UserController {
 
-        public UserController(UserService userService) {
-            this.userService = userService;
-        }
+    private final UserService userService;
 
-        @GetMapping("/users")
-        public String allUsers(Model model) {
-            model.addAttribute("users", userService.getAllUsers());
-            return "users";
-        }
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+
+    @GetMapping
+    public String showAllUsers(Model model) {
+        model.addAttribute("users", userService.getAllUsers());
+        return "list";
+    }
+
+    @GetMapping("/delete")
+    public String deleteUser(@RequestParam(value = "id") int id) {
+        userService.deleteUser(id);
+        return "redirect:/";
+    }
+
+    @GetMapping("/show")
+    public String show(@RequestParam(value = "id") int id, Model model) {
+        User user = userService.getUser(id);
+        model.addAttribute("user", user);
+        return "show";
+    }
+
+    @GetMapping("/new")
+    public String newUser(@ModelAttribute("user") User user) {
+        return "new";
+    }
+    @PostMapping()
+    public String addUser(@ModelAttribute("user") User user) {
+userService.addUser(user);
+        return "redirect:/";
+    }
+
+
+    @GetMapping("/edit")
+    public String editUser(@RequestParam(value = "id") int id, Model model) {
+        model.addAttribute("user", userService.getUser(id));
+        return "edit";
+    }
+
+    @PostMapping("/edit")
+    public String updateUser(@ModelAttribute("user") User user, @RequestParam(value = "id") int id) {
+        userService.updateUser(id, user);
+        return "redirect:/";
+    }
 }

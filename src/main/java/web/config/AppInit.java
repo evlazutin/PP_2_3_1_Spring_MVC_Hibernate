@@ -18,11 +18,11 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
             return new Class<?>[]{WebConfig.class};
         }
 
-        @Override
-        public void onStartup(ServletContext servletContext) throws ServletException {
-            super.onStartup(servletContext);
-            registerHiddenFieldFilter(servletContext);
-        }
+//        @Override
+//        public void onStartup(ServletContext servletContext) throws ServletException {
+//            super.onStartup(servletContext);
+//            registerHiddenFieldFilter(servletContext);
+//        }
 
         @Override
         protected String[] getServletMappings() {
