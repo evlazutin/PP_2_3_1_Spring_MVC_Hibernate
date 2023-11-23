@@ -2,14 +2,9 @@ package web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import web.model.User;
 import web.service.UserService;
-
-import javax.validation.Valid;
-
 
 @Controller
 @RequestMapping("/")
@@ -44,12 +39,12 @@ public class UserController {
     public String newUser(@ModelAttribute("user") User user) {
         return "new";
     }
+
     @PostMapping()
     public String addUser(@ModelAttribute("user") User user) {
-userService.addUser(user);
+        userService.addUser(user);
         return "redirect:/";
     }
-
 
     @GetMapping("/edit")
     public String editUser(@RequestParam(value = "id") int id, Model model) {
